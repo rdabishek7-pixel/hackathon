@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMINEX Login</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+}
+
+.container {
+    width: 350px;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.08);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+    background: linear-gradient(45deg,#00c6ff,#0072ff);
+    color: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.switch {
+    margin-top: 10px;
+    cursor: pointer;
+    color: #ccc;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h1>LUMINEX</h1>
+    <p id="title">Login</p>
+
+    <!-- LOGIN -->
+    <div id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button class="btn" onclick="login()">Login</button>
+        <div class="switch" onclick="toggle()">Don't have an account? Register</div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerForm" class="hidden">
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPassword" placeholder="Password">
+        <button class="btn" onclick="register()">Register</button>
+        <div class="switch" onclick="toggle()">Already have an account? Login</div>
+    </div>
+</div>
+
+<script>
+function toggle() {
+    document.getElementById("loginForm").classList.toggle("hidden");
+    document.getElementById("registerForm").classList.toggle("hidden");
+
+    document.getElementById("title").innerText =
+        document.getElementById("loginForm").classList.contains("hidden")
+        ? "Register" : "Login";
+}
+
+function register() {
+    let name = regName.value;
+    let email = regEmail.value;
+    let password = regPassword.value;
+
+    if (!name || !email || !password) {
+        alert("Fill all fields");
+        return;
+    }
+
+    localStorage.setItem(email, JSON.stringify({name, email, password}));
+    alert("Registered successfully!");
+    toggle();
+}
+
+function login() {
+    let email = loginEmail.value;
+    let password = loginPassword.value;
+
+    let user = JSON.parse(localStorage.getItem(email));
+
+    if (!user || user.password !== password) {
+        alert("Invalid credentials");
+        return;
+    }
+
+    localStorage.setItem("loggedInUser", email);
+    window.location.href = "hackathon.html";
+}
+</script>
+
+</body>
+</html>
+<div class="grid-bg"></div>
+<div class="glow"></div>

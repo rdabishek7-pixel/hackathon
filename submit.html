@@ -1,0 +1,13 @@
+<script>
+document.getElementById("hackathonForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop page reload
+
+    alert(" Registration Submitted Successfully!");
+
+    // Optional: clear form
+    this.reset();
+
+    // Hide team section again
+    document.getElementById("team").style.display = "none";
+});
+</script>

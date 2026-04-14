@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUMINEX Hackathon</title>
+
+<!-- 🔐 Protect page -->
+<script>
+if (!localStorage.getItem("loggedInUser")) {
+    window.location.href = "index.html";
+}
+</script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    color: white;
+    background: #0a0f1c;
+}
+
+.container {
+    width: 400px;
+    margin: 100px auto;
+    backdrop-filter: blur(15px);
+    background: rgba(255,255,255,0.08);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 10px;
+    background: linear-gradient(45deg,#00c6ff,#0072ff);
+    color: white;
+    cursor: pointer;
+}
+
+.logout {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* ✅ SUCCESS ANIMATION */
+#successMsg {
+    display: none;
+    text-align: center;
+    margin-top: 150px;
+    animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+
+<button class="btn logout" onclick="logout()">Logout</button>
+
+<!-- ✅ FORM -->
+<div class="container" id="formContainer">
+    <h1>LUMINEX Hackathon</h1>
+    <p id="user"></p>
+
+    <form id="hackathonForm">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="text" placeholder="College" required>
+
+        <select id="type" required>
+            <option value="">Select Participation</option>
+            <option value="individual">Individual</option>
+            <option value="team">Team</option>
+        </select>
+
+        <div id="team" style="display:none;">
+            <input type="text" placeholder="Team Member 1">
+            <input type="text" placeholder="Team Member 2">
+        </div>
+
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
+
+<!-- ✅ SUCCESS SCREEN -->
+<div id="successMsg">
+    <h1> Registered Successfully!</h1>
+    <p>Welcome to LUMINEX Hackathon 🚀</p>
+</div>
+
+<script>
+// Team toggle
+document.getElementById("type").onchange = function() {
+    document.getElementById("team").style.display =
+        this.value === "team" ? "block" : "none";
+};
+
+// Show username
+let email = localStorage.getItem("loggedInUser");
+let user = JSON.parse(localStorage.getItem(email));
+if (user) {
+    document.getElementById("user").innerText = "Welcome, " + user.name;
+}
+
+// ✅ FORM SUBMIT FUNCTION
+document.getElementById("hackathonForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Hide form
+    document.getElementById("formContainer").style.display = "none";
+
+    // Show success screen
+    document.getElementById("successMsg").style.display = "block";
+});
+
+// Logout
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
